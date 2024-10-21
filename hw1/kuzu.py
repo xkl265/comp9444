@@ -28,9 +28,9 @@ class NetFull(nn.Module):
     # two fully connected tanh layers followed by log softmax
     def __init__(self):
         super(NetFull, self).__init__()
-        self.fc1 = nn.Linear(28*28, 256)
-        self.fc2 = nn.Linear(256, 128)
-        self.fc3 = nn.Linear(128, 100)
+        self.fc1 = nn.Linear(28*28, 510)
+        self.fc2 = nn.Linear(510, 250)
+        self.fc3 = nn.Linear(250, 10)
         self.flatten = nn.Flatten()
         # INSERT CODE HERE
 
@@ -38,9 +38,9 @@ class NetFull(nn.Module):
         x = self.flatten(x)  
         x = self.fc1(x)
         x = F.tanh(x)
-        x = self.fc2(x)
+        x = F.relu(self.fc2(x))
         x = F.tanh(x)
-        x = self.fc3(x)
+        x = F.relu(self.fc3(x))
         x = F.log_softmax(x, dim=1)
         return x # CHANGE CODE HERE
 
@@ -52,7 +52,7 @@ class NetConv(nn.Module):
         self.conv1 = nn.Conv2d(1, 16, 3)
         self.conv2 = nn.Conv2d(16, 32, 3)
         self.fc1 = nn.Linear(32*5*5, 128)
-        self.fc2 = nn.Linear(128, 100)
+        self.fc2 = nn.Linear(128, 10)
         self.flatten = nn.Flatten()
         
         # INSERT CODE HERE
